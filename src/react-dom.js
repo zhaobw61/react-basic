@@ -11,7 +11,12 @@ function createDOM(vdom) {
         return '';
     }
     let {type, props} = vdom;
-    let dom = document.createElement(type);
+    let dom;
+    if(typeof type === 'function'){
+        return updateFunctionComponent(vdom);
+    } else {
+        dom = document.createElement(type);
+    }
     updateProps(dom, props);
     // 添加子节点
     if(typeof props.children === 'string' || typeof props.children === 'number') {
@@ -24,6 +29,12 @@ function createDOM(vdom) {
         dom.textContent = props.children ? props.children.toString() : '';
     }
     return dom;
+}
+
+function updateFunctionComponent(vdom) {
+    let { type,props } = vdom;
+    let renderVdom = type(props);
+    return createDOM(renderVdom);
 }
 
 function reconcileChildren(childrenVdom, parentDOM) {
