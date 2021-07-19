@@ -12,8 +12,13 @@ function createDOM(vdom) {
     }
     let {type, props} = vdom;
     let dom;
+    // 函数组件
     if(typeof type === 'function'){
-        return updateFunctionComponent(vdom);
+        if(type.isReactComponent) {
+            return updateClassComponent(vdom);
+        } else {
+            return updateFunctionComponent(vdom);
+        }
     } else {
         dom = document.createElement(type);
     }
@@ -30,7 +35,16 @@ function createDOM(vdom) {
     }
     return dom;
 }
-
+// 渲染类组件
+function updateClassComponent(vdom) {
+    let {type, props} = vdom;
+    let classInstance = new type(props);
+    let renderVdom = classInstance.render();
+    const dom = createDOM(renderVdom);
+    classInstance.dom = dom;
+    return dom;
+}
+// 渲染函数组件
 function updateFunctionComponent(vdom) {
     let { type,props } = vdom;
     let renderVdom = type(props);
