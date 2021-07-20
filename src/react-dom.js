@@ -2,8 +2,8 @@ function render(vdom, container) {
     const dom = createDOM(vdom);
     container.appendChild(dom);
 }
-
-function createDOM(vdom) {
+// 把虚拟dom 变为真实的dom
+export function createDOM(vdom) {
     if(typeof vdom === 'string' || typeof vdom === 'number') {
         return document.createTextNode(vdom);
     }
@@ -14,6 +14,7 @@ function createDOM(vdom) {
     let dom;
     // 函数组件
     if(typeof type === 'function'){
+        // 类组件
         if(type.isReactComponent) {
             return updateClassComponent(vdom);
         } else {
@@ -55,16 +56,18 @@ function reconcileChildren(childrenVdom, parentDOM) {
     childrenVdom.forEach(childVdom => render(childVdom, parentDOM));
 }
 
-function updateProps(dom, props) {
-    for(let key in props){
+function updateProps(dom, newProps) {
+    for(let key in newProps){
         if(key === 'children') continue;
         if(key === 'style') {
-            let styleObj = props[key];
+            let styleObj = newProps[key];
             for(let key in styleObj){
                 dom.style[key] = styleObj[key];
             }
+        }else if(key.startsWith('on')) {
+            dom[key.toLocaleLowerCase()] = newProps[key];
         } else {
-            dom[key] = props[key];
+            dom[key] = newProps[key];
         }
     }
 }

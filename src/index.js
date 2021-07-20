@@ -1,21 +1,39 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from './react';
+import ReactDOM from './react-dom';
 function Welcome(params) {
   return <p>Welcome1</p>
 }
 
-let ele = <Welcome name="bowen"/>;
+let ele = <p>
+  <div>zhaobowen</div>
+</p>;
+console.log('ele', ele);
 
 class Car extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {num: 1}
+  }
+
+  handleClick=() => {
+    this.setState({num:this.state.num+1})
+    this.setState({num:this.state.num+1})
+  }
+
   render() {
-    return <div>asdasd</div>
+    return (
+      <div>
+        <h1>Hellow</h1>
+        <h2>{this.state.num}</h2>
+        <button onClick={this.handleClick}>+</button>
+      </div>
+    )
   }
 }
 let asd = <Car/>;
-console.log('type',  typeof asd.type);
+console.log(asd);
 ReactDOM.render(
-  ele,
+  <Car/>,
   document.getElementById('root')
 );
-let obj = React.createElement("h1", null, "hello")
 // console.log(JSON.stringify(obj, null, 2));
