@@ -1,4 +1,6 @@
 function render(vdom, container) {
+    console.log('vdom');
+    console.log(JSON.stringify(vdom, null, 2));
     const dom = createDOM(vdom);
     container.appendChild(dom);
 }

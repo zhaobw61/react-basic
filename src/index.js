@@ -25,7 +25,7 @@ class Car extends React.Component {
       <div>
         <h1>Hellow</h1>
         <h2>{this.state.num}</h2>
-        <button onClick={this.handleClick}>+</button>
+        {/* <button onClick={this.handleClick}>+</button> */}
       </div>
     )
   }
