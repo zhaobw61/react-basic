@@ -1,3 +1,4 @@
+import { addEvent } from './event.js'
 function render(vdom, container) {
     console.log('vdom');
     console.log(JSON.stringify(vdom, null, 2));
@@ -67,7 +68,8 @@ function updateProps(dom, newProps) {
                 dom.style[key] = styleObj[key];
             }
         }else if(key.startsWith('on')) {
-            dom[key.toLocaleLowerCase()] = newProps[key];
+            // dom[key.toLocaleLowerCase()] = newProps[key];
+            addEvent(dom, key.toLowerCase(), newProps[key]);
         } else {
             dom[key] = newProps[key];
         }

@@ -1,5 +1,5 @@
-import React from './react';
-import ReactDOM from './react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 function Welcome(params) {
   return <p>Welcome1</p>
 }
@@ -15,7 +15,8 @@ class Car extends React.Component {
     this.state = {num: 1}
   }
 
-  handleClick=() => {
+  handleClick=(event) => {
+    console.log('event', event);
     this.setState({num:this.state.num+1})
     this.setState({num:this.state.num+1})
   }
@@ -25,7 +26,7 @@ class Car extends React.Component {
       <div>
         <h1>Hellow</h1>
         <h2>{this.state.num}</h2>
-        {/* <button onClick={this.handleClick}>+</button> */}
+        <button onClick={this.handleClick}>+</button>
       </div>
     )
   }
