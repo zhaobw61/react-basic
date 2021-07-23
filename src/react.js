@@ -1,9 +1,10 @@
 import Component from './Component'
 function createElement(type, config, children) {
-    console.log('children', children);
     if(config) {
         delete config._owner;
         delete config._store;
+        ref = config.ref;
+        delete config.ref;
     }
     let props = { ...config };
     if(arguments.length > 3) {
@@ -11,8 +12,12 @@ function createElement(type, config, children) {
     }
     props.children = children;
     return {
-        type, props
+        type, props, ref
     }
+}
+
+function createRef() {
+    return { current: null };
 }
 
 let React = {

@@ -1,13 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-function Welcome(params) {
-  return <p>Welcome1</p>
-}
-
-let ele = <p>
-  <div>zhaobowen</div>
-</p>;
-console.log('ele', ele);
 
 class Car extends React.Component {
   constructor(props) {
@@ -31,8 +23,18 @@ class Car extends React.Component {
     )
   }
 }
-let asd = <Car/>;
-console.log(asd);
+
+class Sum extends React.Component {
+  add = () => {
+
+  }
+  render() {
+    return (
+      <div> </div>
+    )
+  }
+}
+
 ReactDOM.render(
   <Car/>,
   document.getElementById('root')

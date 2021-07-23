@@ -13,7 +13,7 @@ export function createDOM(vdom) {
     if(!vdom) {
         return '';
     }
-    let {type, props} = vdom;
+    let {type, props, ref} = vdom;
     let dom;
     // 函数组件
     if(typeof type === 'function'){
@@ -36,6 +36,9 @@ export function createDOM(vdom) {
         reconcileChildren(props.children, dom);
     } else {
         dom.textContent = props.children ? props.children.toString() : '';
+    }
+    if(ref){
+        ref.current = dom;
     }
     return dom;
 }
