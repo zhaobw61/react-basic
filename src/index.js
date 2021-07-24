@@ -1,10 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from './react';
+import ReactDOM from './react-dom';
 
 class Car extends React.Component {
   constructor(props) {
     super(props);
     this.state = {num: 1}
+  }
+
+  componentWillMount() {
+
   }
 
   handleClick=(event) => {
@@ -17,23 +21,29 @@ class Car extends React.Component {
     return (
       <div>
         <h1>Hellow</h1>
-        <h2>{this.state.num}</h2>
-        <button onClick={this.handleClick}>+</button>
+        <div>world</div>
       </div>
     )
   }
+  componentDidMount() {}
+
+  shouldComponentUpdate(){}
+
+  componentWillUpdate() {}
+
+
+  componentDidUpdate() {}
 }
 
-class Sum extends React.Component {
-  add = () => {
-
-  }
-  render() {
-    return (
-      <div> </div>
-    )
-  }
-}
+// class Sum extends React.Component {
+//   add = () => {
+//   }
+//   render() {
+//     return (
+//       <div> </div>
+//     )
+//   }
+// }
 
 ReactDOM.render(
   <Car/>,

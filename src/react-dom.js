@@ -1,7 +1,6 @@
 import { addEvent } from './event.js'
 function render(vdom, container) {
-    console.log('vdom');
-    console.log(JSON.stringify(vdom, null, 2));
+    console.log('vdom', JSON.stringify(vdom, null, 2));
     const dom = createDOM(vdom);
     container.appendChild(dom);
 }
@@ -46,9 +45,15 @@ export function createDOM(vdom) {
 function updateClassComponent(vdom) {
     let {type, props} = vdom;
     let classInstance = new type(props);
+    if(classInstance.componentWillMount) {
+        classInstance.componentWillMount()
+    }
     let renderVdom = classInstance.render();
     const dom = createDOM(renderVdom);
     classInstance.dom = dom;
+    if(classInstance.componentDidMount) {
+        classInstance.componentDidMount()
+    }
     return dom;
 }
 // 渲染函数组件

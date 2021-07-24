@@ -1,5 +1,6 @@
 import Component from './Component'
 function createElement(type, config, children) {
+    let ref;
     if(config) {
         delete config._owner;
         delete config._store;
