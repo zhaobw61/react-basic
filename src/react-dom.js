@@ -1,5 +1,6 @@
 import { addEvent } from './event.js'
 function render(vdom, container) {
+    console.log('vdom', vdom);
     const dom = createDOM(vdom);
     container.appendChild(dom);
 }
@@ -90,6 +91,7 @@ function updateProps(dom, oldProps, newProps) {
 }
 // DOM-DIFF的比较更新
 export function compareTwoVdom(parentDOM, oldVdom, newVdom) {
+    console.log('compareTwoVdom---compareTwoVdom');
     if(oldVdom === null && newVdom === null){
         return null;
     } else if(oldVdom && newVdom === null) {
