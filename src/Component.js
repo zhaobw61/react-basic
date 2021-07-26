@@ -1,4 +1,4 @@
-import { createDOM } from "./react-dom";
+import { createDOM, compareTwoVdom } from "./react-dom";
 import {isFunction} from './utils'
 
 export let updateQueue = {
@@ -78,10 +78,16 @@ class Component {
         if(this.componentWillUpdate) {
             this.componentWillUpdate();
         }
-        let renderVdom = this.render();
-        updateClassComponent(this, renderVdom);
+        let newVdom = this.render();
+        let currentVdom = compareTwoVdom(this.oldVdom.dom.parentNode, this.oldVdom, newVdom);
+        // 每次更新后，最新的vdom会成为最新的上一次的vdom，等待下一次的更新比较
+        this.oldVdom = currentVdom;
+        if(this.componentDidUpdate) {
+            this.componentDidUpdate();
+        }
     }
 }
+
 function updateClassComponent(classInstance, renderVdom) {
     let oldDOM = classInstance.dom;
     let newDOM = createDOM(renderVdom);

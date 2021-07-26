@@ -11,7 +11,7 @@ class Car extends React.Component {
 
   }
 
-  handleClick=(event) => {
+  handleClick = (event) => {
     console.log('event', event);
     this.setState({num:this.state.num+1})
     this.setState({num:this.state.num+1})
@@ -31,19 +31,8 @@ class Car extends React.Component {
 
   componentWillUpdate() {}
 
-
   componentDidUpdate() {}
 }
-
-// class Sum extends React.Component {
-//   add = () => {
-//   }
-//   render() {
-//     return (
-//       <div> </div>
-//     )
-//   }
-// }
 
 ReactDOM.render(
   <Car/>,
