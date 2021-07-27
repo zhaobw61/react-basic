@@ -13,9 +13,7 @@ class Car extends React.Component {
   }
 
   handleClick = (event) => {
-    console.log('event', event);
     this.setState({num:this.state.num+1});
-    console.log(this.state.num);
   }
 
   render() {

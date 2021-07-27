@@ -10,7 +10,6 @@ export function addEvent(dom , eventType, listener) {
 let syntheticEvent = {};
 function dispatchEvent(event) {
     let {target, type} = event;
-    console.log('target', target);
     let eventType = `on${type}`
     updateQueue.isBatchingUpdate = true;
     syntheticEvent = createSyntheticEvent(event);
