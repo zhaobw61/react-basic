@@ -8,30 +8,40 @@ class Car extends React.Component {
   }
 
   componentWillMount() {
+    console.log('componentWillMount');
 
   }
 
   handleClick = (event) => {
     console.log('event', event);
-    this.setState({num:this.state.num+1})
-    this.setState({num:this.state.num+1})
+    this.setState({num:this.state.num+1});
+    console.log(this.state.num);
   }
 
   render() {
     return (
       <div>
-        <h1>Hellow</h1>
-        <div>world</div>
+        <h1>{this.state.num}</h1>
+        <button onClick={this.handleClick}>click</button>
       </div>
     )
   }
-  componentDidMount() {}
+  componentDidMount() {
+    console.log('componentDidMount');
+  }
 
-  shouldComponentUpdate(){}
+  shouldComponentUpdate(){
+    console.log('shouldComponentUpdate');
+    return true;
+  }
 
-  componentWillUpdate() {}
+  componentWillUpdate() {
+    console.log('componentWillUpdate');
+  }
 
-  componentDidUpdate() {}
+  componentDidUpdate() {
+    console.log('componentDidUpdate');
+  }
 }
 
 ReactDOM.render(

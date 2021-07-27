@@ -1,6 +1,5 @@
 import Component from './Component'
 function createElement(type, config, children) {
-    console.log('createElement');
     let ref;
     if(config) {
         delete config._owner;
@@ -10,7 +9,7 @@ function createElement(type, config, children) {
     }
     let props = { ...config };
     if(arguments.length > 3) {
-        children = Array.prototype.slice.call(children, 2);
+        children = Array.prototype.slice.call(arguments, 2);
     }
     props.children = children;
     return {

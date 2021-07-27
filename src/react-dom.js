@@ -1,6 +1,5 @@
 import { addEvent } from './event.js'
 function render(vdom, container) {
-    console.log('vdom', vdom);
     const dom = createDOM(vdom);
     container.appendChild(dom);
 }
@@ -25,11 +24,11 @@ export function createDOM(vdom) {
     } else {
         dom = document.createElement(type);
     }
-    updateProps(dom, props);
+    updateProps(dom, {}, props);
     // 添加子节点
     if(typeof props.children === 'string' || typeof props.children === 'number') {
         dom.textContent = props.children;
-    } else if(typeof props.children === 'Object' && props.children.type) { // 一个子节点 ERROR:多个子节点是数组，但是typeof也会被判断为Object
+    } else if(typeof props.children === 'object' && props.children.type) { // 一个子节点 ERROR:多个子节点是数组，但是typeof也会被判断为Object
         render(props.children, dom);
     } else if (Array.isArray(props.children)){ // 多个子节点
         reconcileChildren(props.children, dom);
@@ -91,10 +90,9 @@ function updateProps(dom, oldProps, newProps) {
 }
 // DOM-DIFF的比较更新
 export function compareTwoVdom(parentDOM, oldVdom, newVdom) {
-    console.log('compareTwoVdom---compareTwoVdom');
-    if(oldVdom === null && newVdom === null){
+    if(!oldVdom && !newVdom){
         return null;
-    } else if(oldVdom && newVdom === null) {
+    } else if(oldVdom && !newVdom) {
         let currentDOM = oldVdom.dom;
         parentDOM.removeChild(currentDOM);
         if(oldVdom.classInstance && oldVdom.classInstance.componentWillMount){

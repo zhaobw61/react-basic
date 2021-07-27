@@ -75,6 +75,7 @@ class Component {
     }
     // 强制更新
     forceUpdate() {
+        console.log('forceUpdate');
         if(this.componentWillUpdate) {
             this.componentWillUpdate();
         }
@@ -82,6 +83,7 @@ class Component {
         let currentVdom = compareTwoVdom(this.oldVdom.dom.parentNode, this.oldVdom, newVdom);
         // 每次更新后，最新的vdom会成为最新的上一次的vdom，等待下一次的更新比较
         this.oldVdom = currentVdom;
+        // updateClassComponent(this, newVdom);
         if(this.componentDidUpdate) {
             this.componentDidUpdate();
         }
@@ -92,9 +94,6 @@ function updateClassComponent(classInstance, renderVdom) {
     let oldDOM = classInstance.dom;
     let newDOM = createDOM(renderVdom);
     oldDOM.parentNode.replaceChild(newDOM,oldDOM);
-    if(this.componentDidUpdate) {
-        this.componentDidUpdate();
-    }
     classInstance.dom = newDOM;
 }
 export default Component;
