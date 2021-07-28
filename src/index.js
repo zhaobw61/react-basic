@@ -14,12 +14,20 @@ class Car extends React.Component {
 
   handleClick = (event) => {
     this.setState({num:this.state.num+1});
+    console.log('this.state.num', this.state);
   }
 
   render() {
     return (
       <div>
-        <h1>{this.state.num}</h1>
+        <h1>
+          <span>Car:</span>
+          <span>{this.state.num}</span>
+        </h1>
+        <h1>
+          <span>ChildCar:</span>
+          <ChildCar num={this.state.num}/>
+        </h1>
         <button onClick={this.handleClick}>click</button>
       </div>
     )
@@ -39,6 +47,22 @@ class Car extends React.Component {
 
   componentDidUpdate() {
     console.log('componentDidUpdate');
+  }
+}
+
+class ChildCar extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <span>
+        <span>
+          <span>{this.props.num}</span>
+          <span>DDDD</span>
+        </span>
+      </span>
+    )
   }
 }
 

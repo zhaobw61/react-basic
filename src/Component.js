@@ -24,14 +24,16 @@ class Updater{
         this.emitUpdate(); // 发射更新
     }
 
-    emitUpdate() {
-        updateQueue.isBatchingUpdate?updateQueue.add(this):this.updateComponent();
+    emitUpdate(nextProps) {
+        this.nextProps = nextProps;
+        this.nextProps || !updateQueue.isBatchingUpdate ? this.updateComponent() : updateQueue.add(this);
+        // updateQueue.isBatchingUpdate?updateQueue.add(this):this.updateComponent();
     }
 
     updateComponent() {
-        let {classInstance, pendingStates} = this;
-        if(pendingStates.length > 0){
-            shouldUpdate(classInstance,this.getState());
+        let {classInstance, pendingStates, nextProps} = this;
+        if(nextProps || pendingStates.length > 0){
+            shouldUpdate(classInstance, nextProps, this.getState());
         }
     }
 
@@ -51,7 +53,10 @@ class Updater{
     }
 }
 
-function shouldUpdate(classInstance, nextState) {
+function shouldUpdate(classInstance, nextProps, nextState) {
+    if(nextProps) {
+        classInstance.props = nextProps;
+    }
     classInstance.state = nextState;
     if(classInstance.shouldComponentUpdate && !classInstance.shouldComponentUpdate(classInstance.props, nextState)){
         return;
@@ -75,7 +80,6 @@ class Component {
     }
     // 强制更新
     forceUpdate() {
-        console.log('forceUpdate');
         if(this.componentWillUpdate) {
             this.componentWillUpdate();
         }
