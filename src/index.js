@@ -26,7 +26,7 @@ class Car extends React.Component {
         </h1>
         <h1>
           <span>ChildCar:</span>
-          <ChildCar num={this.state.num}/>
+          <ChildCar count={this.state.num}/>
         </h1>
         <button onClick={this.handleClick}>click</button>
       </div>
@@ -53,13 +53,26 @@ class Car extends React.Component {
 class ChildCar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      number: 1
+    };
+  }
+  // 类的静态方法， 从属性对象映射状态对象
+  // nextProps:下次传入的属性
+  // prevState：即将改变的属性
+  static getDerivedStateFromProps(nextProps, prevState) {
+    let {count} = nextProps;
+    console.log('count', count);
+    return {
+      number:count * 2
+    }
   }
   render() {
     return (
       <span>
         <span>
-          <span>{this.props.num}</span>
-          <span>DDDD</span>
+          <span>asdasd</span>
+          <span>{this.state.number}</span>
         </span>
       </span>
     )

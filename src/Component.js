@@ -83,6 +83,12 @@ class Component {
         if(this.componentWillUpdate) {
             this.componentWillUpdate();
         }
+        if(this.ownVdom.type.getDerivedStateFromProps) {
+            let newState = this.ownVdom.type.getDerivedStateFromProps(this.props,this.state);
+            if(newState) {
+                this.state = newState;
+            }
+        }
         let newVdom = this.render();
         let currentVdom = compareTwoVdom(this.oldVdom.dom.parentNode, this.oldVdom, newVdom);
         // 每次更新后，最新的vdom会成为最新的上一次的vdom，等待下一次的更新比较
