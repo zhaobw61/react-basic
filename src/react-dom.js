@@ -112,6 +112,14 @@ export function compareTwoVdom(parentDOM, oldVdom, newVdom, nextDOM) {
             parentDOM.appendChild(newDOM);
         }
         return newVdom;
+    } else if(oldVdom && newVdom && (oldVdom.type !== newVdom.type)) {
+        let oldDOM = oldVdom.dom;
+        let newDOM = createDOM(newVdom);
+        oldDOM.parentNode.replaceChild(newDOM, oldDOM);
+        if(oldVdom.classInstance && oldVdom.classInstance.componentWillMount){
+            oldVdom.classInstance.componentWillMount();
+        }
+        return newDOM;
     } else {
         updateElement(oldVdom, newVdom);
         return newVdom;
@@ -119,8 +127,6 @@ export function compareTwoVdom(parentDOM, oldVdom, newVdom, nextDOM) {
 }
 
 function updateElement(oldVdom, newVdom) {
-    console.log('updateElement-oldVdom', oldVdom);
-    console.log('updateElement-newVdom', newVdom);
     let currentDOM = newVdom.dom = oldVdom.dom;
     newVdom.classInstance = oldVdom.classInstance;
     // dom节点组件
