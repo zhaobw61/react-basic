@@ -71,13 +71,14 @@ class ChildCar extends React.Component {
     return (
       <span>
         <span>
-          <span>asdasd</span>
           <span>{this.state.number}</span>
         </span>
       </span>
     )
   }
 }
+
+
 
 ReactDOM.render(
   <Car/>,

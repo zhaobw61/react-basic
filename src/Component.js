@@ -90,12 +90,14 @@ class Component {
             }
         }
         let newVdom = this.render();
+        // 在修改dom 之前，拿道dom 的信息
+        let extraArgs = this.getSnapshotBeforeUpdate && this.getSnapshotBeforeUpdate();
         let currentVdom = compareTwoVdom(this.oldVdom.dom.parentNode, this.oldVdom, newVdom);
         // 每次更新后，最新的vdom会成为最新的上一次的vdom，等待下一次的更新比较
         this.oldVdom = currentVdom;
         // updateClassComponent(this, newVdom);
         if(this.componentDidUpdate) {
-            this.componentDidUpdate();
+            this.componentDidUpdate(this.props, this.state, extraArgs);
         }
     }
 }

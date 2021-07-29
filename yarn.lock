@@ -2243,6 +2243,14 @@ array-includes@^3.0.3, array-includes@^3.1.1:
     get-intrinsic "^1.1.1"
     is-string "^1.0.5"
 
+array-to-tree@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.npm.taobao.org/array-to-tree/download/array-to-tree-3.3.2.tgz#06da2f3815a906a99aaa5ad793a39114db36da52"
+  integrity sha1-BtovOBWpBqmaqlrXk6ORFNs22lI=
+  dependencies:
+    lodash.keyby "^4.6.0"
+    nested-property "^0.0.7"
+
 array-union@^1.0.1:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/array-union/download/array-union-1.0.2.tgz?cache=0&sync_timestamp=1614624302839&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Farray-union%2Fdownload%2Farray-union-1.0.2.tgz#9a34410e4f4e3da23dea375be5be70f24778ec39"
@@ -6804,6 +6812,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.npm.taobao.org/lodash.debounce/download/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
+lodash.keyby@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.npm.taobao.org/lodash.keyby/download/lodash.keyby-4.6.0.tgz#7f6a1abda93fd24e22728a4d361ed8bcba5a4354"
+  integrity sha1-f2oavak/0k4icopNNh7YvLpaQ1Q=
+
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.npm.taobao.org/lodash.memoize/download/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -7234,6 +7247,11 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   version "2.6.2"
   resolved "https://registry.npm.taobao.org/neo-async/download/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha1-tKr7k+OustgXTKU88WOrfXMIMF8=
+
+nested-property@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.npm.taobao.org/nested-property/download/nested-property-0.0.7.tgz#ff222f233ca8793c6828b4117091bea597130f4f"
+  integrity sha1-/yIvIzyoeTxoKLQRcJG+pZcTD08=
 
 next-tick@~1.0.0:
   version "1.0.0"
