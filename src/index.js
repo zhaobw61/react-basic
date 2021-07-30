@@ -78,10 +78,69 @@ class ChildCar extends React.Component {
   }
 }
 
+// context--- start ---
+let ThemeContext = React.createContext(null);
+class Page extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      color: 'red'
+    }
+  }
+  changeColor = (color) => {
+    this.setState({color})
+  }
+  render(h) {
+    let contextVal = { color: this.state.color };
+    return (
+      <ThemeContext.Provider  value={contextVal}>
+        <div id="a">
+            <div id="b">
+                <button onClick={
+                  () => {
+                    this.changeColor('yellow')
+                  }
+                }>change-yellow</button>
+            </div>
+            <div>
+                <button onClick={
+                  () => {
+                    this.changeColor('red')
+                  }
+                }>change-red</button>
+            </div>
+            <span style={{color: this.state.color}}>Page - Page</span>
+            <Title/>
+        </div>
+      </ThemeContext.Provider >
+    )
+  }
+}
 
+class Title extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render(h) {
+    return (
+      <ThemeContext.Consumer>
+        {
+          (value) => {
+            return (
+              <div>
+                <span style={{color: value.color}}>Title</span>
+              </div>
+            )
+          }
+        }
+      </ThemeContext.Consumer>
+    )
+  }
+}
+// context--- end ---
 
 ReactDOM.render(
-  <Car/>,
+  <Page/>,
   document.getElementById('root')
 );
 // console.log(JSON.stringify(obj, null, 2));

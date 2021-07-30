@@ -21,7 +21,23 @@ function createRef() {
     return { current: null };
 }
 
+function createContext(params) {
+    let currentValue;
+    function Provider(props) {
+        currentValue = props.value
+        return props.children;
+    }
+    function Consumer(props) {
+        return props.children(currentValue);
+    }
+    return {
+        Provider,
+        Consumer,
+    }
+}
+
 let React = {
+    createContext,
     createElement,
     Component
 }

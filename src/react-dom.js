@@ -1,6 +1,5 @@
 import { addEvent } from './event.js'
 function render(vdom, container) {
-    console.log('render-vdom', vdom);
     const dom = createDOM(vdom);
     container.appendChild(dom);
 }
@@ -18,9 +17,9 @@ export function createDOM(vdom) {
     if(typeof type === 'function'){
         // 类组件
         if(type.isReactComponent) {
-            return updateClassComponent(vdom);
+            return mountClassComponent(vdom);
         } else {
-            return updateFunctionComponent(vdom);
+            return mountFunctionComponent(vdom);
         }
     } else {
         dom = document.createElement(type);
@@ -44,7 +43,7 @@ export function createDOM(vdom) {
     return dom;
 }
 // 渲染类组件
-function updateClassComponent(vdom) {
+function mountClassComponent(vdom) {
     let {type, props} = vdom;
     let classInstance = new type(props);
 
@@ -66,9 +65,10 @@ function updateClassComponent(vdom) {
     return dom;
 }
 // 渲染函数组件
-function updateFunctionComponent(vdom) {
+function mountFunctionComponent(vdom) {
     let { type,props } = vdom;
     let renderVdom = type(props);
+    vdom.renderVdom = renderVdom;
     return createDOM(renderVdom);
 }
 
@@ -111,6 +111,7 @@ export function compareTwoVdom(parentDOM, oldVdom, newVdom, nextDOM) {
         } else {
             parentDOM.appendChild(newDOM);
         }
+        console.log('1');
         return newVdom;
     } else if(oldVdom && newVdom && (oldVdom.type !== newVdom.type)) {
         let oldDOM = oldVdom.dom;
@@ -119,23 +120,40 @@ export function compareTwoVdom(parentDOM, oldVdom, newVdom, nextDOM) {
         if(oldVdom.classInstance && oldVdom.classInstance.componentWillMount){
             oldVdom.classInstance.componentWillMount();
         }
-        return newDOM;
+        console.log('2');
+        // return newDOM;
+        return newVdom;
     } else {
+        console.log('newVdom');
+        console.log(newVdom);
         updateElement(oldVdom, newVdom);
+        console.log('3');
         return newVdom;
     }
 }
 
 function updateElement(oldVdom, newVdom) {
-    let currentDOM = newVdom.dom = oldVdom.dom;
-    newVdom.classInstance = oldVdom.classInstance;
-    // dom节点组件
-    if(typeof oldVdom.type === 'string'){
+    if(typeof oldVdom.type === 'string'){ // dom节点组件
+        let currentDOM = newVdom.dom = oldVdom.dom;
         updateProps(currentDOM, oldVdom.props, newVdom.props);
         updateChildren(currentDOM, oldVdom.props.children, newVdom.props.children);
-    } else if(typeof oldVdom.type === 'function') { // 就是类组件
-        updateClassInstance(oldVdom, newVdom);
+    } else if(typeof oldVdom.type === 'function') {
+        console.log('oldVdom.type.isReactComponent', oldVdom.type.isReactComponent);
+        if(oldVdom.type.isReactComponent){ // 就是类组件
+            newVdom.dom = oldVdom.dom;
+            newVdom.classInstance = oldVdom.classInstance;
+            updateClassInstance(oldVdom, newVdom);
+        } else { // 是一个函数式组件
+            updateFunctionComponent(oldVdom, newVdom);
+        }
     }
+}
+
+function updateFunctionComponent(oldVdom, newVdom) {
+    let parentDOM = oldVdom.renderVdom.dom.parentNode;
+    let { type,props } = newVdom;
+    let newRenderVdom = type(props);
+    compareTwoVdom(parentDOM, oldVdom.renderVdom, newRenderVdom);
 }
 
 function updateChildren(parentDOM,oldVChildren,newVChildren) {
