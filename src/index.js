@@ -139,8 +139,46 @@ class Title extends React.Component {
 }
 // context--- end ---
 
+// 反向继承--- start ---
+let wrapper = oldComponent => {
+  return class extends oldComponent {
+    constructor(props) {
+      super(props);
+      this.state = {
+        number: 1
+      }
+    }
+    handleClick = () => {
+      this.setState({number: this.state.number + 1})
+    }
+    render() {
+      let oldComponentRenderElement = super.render();
+      let newProps = {
+        ...oldComponentRenderElement.props,
+        onClick: this.handleClick
+      }
+      return React.cloneElement(oldComponentRenderElement, newProps, this.state.number);
+    }
+  }
+}
+@wrapper // 装饰器？？？？
+class Button extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render(h) {
+    return <button>dianji</button>
+  }
+}
+
+
+
+// let NewButton = wrapper(Button);
+// 反向继承--- end ---
+
+
 ReactDOM.render(
-  <Page/>,
+  <Button/>,
   document.getElementById('root')
 );
 // console.log(JSON.stringify(obj, null, 2));

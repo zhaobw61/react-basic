@@ -132,7 +132,7 @@ export function compareTwoVdom(parentDOM, oldVdom, newVdom, nextDOM) {
     }
 }
 
-function updateElement(oldVdom, newVdom) {
+function updateElement(oldVdom, newVdom) {// ???????????????????????????????????
     if(typeof oldVdom.type === 'string'){ // dom节点组件
         let currentDOM = newVdom.dom = oldVdom.dom;
         updateProps(currentDOM, oldVdom.props, newVdom.props);
@@ -149,7 +149,7 @@ function updateElement(oldVdom, newVdom) {
     }
 }
 
-function updateFunctionComponent(oldVdom, newVdom) {
+function updateFunctionComponent(oldVdom, newVdom) {// ???????????????????????????????????
     let parentDOM = oldVdom.renderVdom.dom.parentNode;
     let { type,props } = newVdom;
     let newRenderVdom = type(props);
@@ -175,7 +175,7 @@ function updateChildren(parentDOM,oldVChildren,newVChildren) {
     }
 }
 
-function updateClassInstance(oldVdom, newVdom) {
+function updateClassInstance(oldVdom, newVdom) {// ???????????????????????????????????
     let classInstance = oldVdom.classInstance;
     if(classInstance.componentWillReceiveProps){
         classInstance.componentWillReceiveProps();

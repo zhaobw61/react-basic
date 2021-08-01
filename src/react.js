@@ -17,6 +17,17 @@ function createElement(type, config, children) {
     }
 }
 
+function cloneElement(element, props, children) { // 这里传入的时候vdom的格式， 有个奇怪的地方，如果是这样的话，那不就覆盖了要克隆的元素的子元素嘛？
+    if(arguments.length > 3) {
+        children = Array.prototype.slice.call(arguments, 2);
+    }
+    props.children = children;
+    return {
+        ...element,
+        props
+    }
+}
+
 function createRef() {
     return { current: null };
 }
@@ -39,7 +50,8 @@ function createContext(params) {
 let React = {
     createContext,
     createElement,
-    Component
+    Component,
+    cloneElement
 }
 
 export default React;
