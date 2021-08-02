@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from './react';
+import ReactDOM from './react-dom';
 
 class Car extends React.Component {
   constructor(props) {
@@ -179,12 +179,13 @@ class Button extends React.Component {
 // render props--- start ---
 // 高阶组件
 function withTracker(OldComponent) {
-  return class MouseTracker extends React.Component{
+  return class MouseTracker extends React.PureComponent{
     constructor(props) {
       super(props);
       this.state = {x:0, y:0}
     }
     handleMouseMove = (event) => {
+      console.log('PureComponent',event);
       this.setState({
         x: event.clientX,
         y: event.clientY
@@ -204,7 +205,9 @@ let HighOrder = withTracker((props) => (<>
   <p>当前鼠标的位置x={props.x}, y={props.y}</p>
   </>))
 // render props--- end ---
+// PureComponent --- start ---
 
+// PureComponent --- end ---
 
 ReactDOM.render(
   <HighOrder/>,

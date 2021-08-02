@@ -57,10 +57,10 @@ function shouldUpdate(classInstance, nextProps, nextState) {
     if(nextProps) {
         classInstance.props = nextProps;
     }
-    classInstance.state = nextState;
     if(classInstance.shouldComponentUpdate && !classInstance.shouldComponentUpdate(classInstance.props, nextState)){
         return;
     }
+    classInstance.state = nextState;
     classInstance.forceUpdate();
 }
 

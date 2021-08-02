@@ -129,7 +129,6 @@ export function compareTwoVdom(parentDOM, oldVdom, newVdom, nextDOM) {
         } else {
             parentDOM.appendChild(newDOM);
         }
-        console.log('1');
         return newVdom;
     } else if(oldVdom && newVdom && (oldVdom.type !== newVdom.type)) {
         let oldDOM = oldVdom.dom;
@@ -138,14 +137,10 @@ export function compareTwoVdom(parentDOM, oldVdom, newVdom, nextDOM) {
         if(oldVdom.classInstance && oldVdom.classInstance.componentWillMount){
             oldVdom.classInstance.componentWillMount();
         }
-        console.log('2');
         // return newDOM;
         return newVdom;
     } else {
-        console.log('newVdom');
-        console.log(newVdom);
         updateElement(oldVdom, newVdom);
-        console.log('3');
         return newVdom;
     }
 }
@@ -156,7 +151,6 @@ function updateElement(oldVdom, newVdom) {// ???????????????????????????????????
         updateProps(currentDOM, oldVdom.props, newVdom.props);
         updateChildren(currentDOM, oldVdom.props.children, newVdom.props.children);
     } else if(typeof oldVdom.type === 'function') {
-        console.log('oldVdom.type.isReactComponent', oldVdom.type.isReactComponent);
         if(oldVdom.type.isReactComponent){ // 就是类组件
             newVdom.dom = oldVdom.dom;
             newVdom.classInstance = oldVdom.classInstance;

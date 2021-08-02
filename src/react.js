@@ -1,5 +1,7 @@
 import Component from './Component';
-export let reactFragment = react.fragment;
+// import {updateQueue} from './Component';
+// console.log('updateQueue', updateQueue);
+export let reactFragment = 'react.fragment';
 function createElement(type, config, children) {
     let ref;
     if(config) {
@@ -48,11 +50,30 @@ function createContext(params) {
     }
 }
 
+class PureComponent extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let oldKeyLength = Object.keys(this.state).length;
+        let newKeyLength = Object.keys(nextState).length;
+        if(oldKeyLength != newKeyLength){
+            return true;
+        }
+        for(let key in this.state) {
+            console.log('state',this.state[key], key);
+            console.log('nextState', nextState[key], key);
+            if(this.state[key] !== nextState[key]){
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
 let React = {
     createContext,
     createElement,
     Component,
-    cloneElement
+    cloneElement,
+    PureComponent
 }
 
 export default React;

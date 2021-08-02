@@ -1,5 +1,6 @@
 import { updateQueue } from "./Component";
 
+
 export function addEvent(dom , eventType, listener) {
     let store = dom.store || (dom.store={});
     store[eventType] = listener;
