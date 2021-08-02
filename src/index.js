@@ -1,5 +1,5 @@
-import React from './react';
-import ReactDOM from './react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 class Car extends React.Component {
   constructor(props) {
@@ -176,9 +176,38 @@ class Button extends React.Component {
 // let NewButton = wrapper(Button);
 // 反向继承--- end ---
 
+// render props--- start ---
+// 高阶组件
+function withTracker(OldComponent) {
+  return class MouseTracker extends React.Component{
+    constructor(props) {
+      super(props);
+      this.state = {x:0, y:0}
+    }
+    handleMouseMove = (event) => {
+      this.setState({
+        x: event.clientX,
+        y: event.clientY
+      });
+    }
+    render() {
+      return(
+        <div onMouseMove={this.handleMouseMove} style={{border: '1px solid #ccc'}}>
+          <OldComponent {...this.state}/>
+        </div>
+      )
+    }
+  }
+}
+let HighOrder = withTracker((props) => (<>
+  <div>移动鼠标</div>
+  <p>当前鼠标的位置x={props.x}, y={props.y}</p>
+  </>))
+// render props--- end ---
+
 
 ReactDOM.render(
-  <Button/>,
+  <HighOrder/>,
   document.getElementById('root')
 );
 // console.log(JSON.stringify(obj, null, 2));

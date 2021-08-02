@@ -1,4 +1,5 @@
-import Component from './Component'
+import Component from './Component';
+export let reactFragment = react.fragment;
 function createElement(type, config, children) {
     let ref;
     if(config) {

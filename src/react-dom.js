@@ -22,7 +22,11 @@ export function createDOM(vdom) {
             return mountFunctionComponent(vdom);
         }
     } else {
-        dom = document.createElement(type);
+        if(type === 'react.fragment') {
+            dom = document.createDocumentFragment();
+        } else {
+            dom = document.createElement(type);
+        }
     }
     updateProps(dom, {}, props);
     // 添加子节点
