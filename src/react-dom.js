@@ -96,6 +96,20 @@ function updateProps(dom, oldProps, newProps) {
         }
     }
 }
+function findDOM(vdom) {
+    let {type} = vdom;
+    let dom;
+    if(typeof type === 'function') {
+        if(type.isReactComponent){
+            dom = findDOM(vdom.classInstance.oldRenderVdom);
+        } else {
+            dom = findDOM(vdom.oldRenderVdom);
+        }
+    } else {
+        dom = vdom.dom;
+    }
+    return dom;
+}
 // DOM-DIFF的比较更新
 export function compareTwoVdom(parentDOM, oldVdom, newVdom, nextDOM) {
     if(!oldVdom && !newVdom){
