@@ -1,12 +1,16 @@
 import { addEvent } from './event.js'
-function render(vdom, container) {
-    const dom = createDOM(vdom);
-    container.appendChild(dom);
+function render(vdom, container, mountIndex) {
+    const dom = createDOM(vdom, mountIndex);
+    if(dom) {
+        container.appendChild(dom);
+    }
 }
 // 把虚拟dom 变为真实的dom
-export function createDOM(vdom) {
+export function createDOM(vdom, mountIndex) {
     if(typeof vdom === 'string' || typeof vdom === 'number') {
-        return document.createTextNode(vdom);
+        let dom = document.createTextNode(vdom);
+        dom._mountIndex = mountIndex;
+        return dom;
     }
     if(!vdom) {
         return '';
@@ -43,6 +47,7 @@ export function createDOM(vdom) {
         ref.current = dom;
     }
     // 保存由改虚拟dom创建的真实的dom
+    dom._mountIndex = mountIndex;
     vdom.dom = dom;
     return dom;
 }
@@ -75,9 +80,11 @@ function mountFunctionComponent(vdom) {
     vdom.renderVdom = renderVdom;
     return createDOM(renderVdom);
 }
-
+// 把虚拟DOM转换成真实DOM并且出入到父节点
 function reconcileChildren(childrenVdom, parentDOM) {
-    childrenVdom.forEach(childVdom => render(childVdom, parentDOM));
+    childrenVdom.forEach((childVdom, index) => {
+        render(childVdom, parentDOM, index);
+    });
 }
 
 function updateProps(dom, oldProps, newProps) {
@@ -179,6 +186,15 @@ function updateChildren(parentDOM,oldVChildren,newVChildren) {
     oldVChildren = Array.isArray(oldVChildren) ? oldVChildren : [oldVChildren];
     newVChildren = Array.isArray(newVChildren) ? newVChildren : [newVChildren];
     let maxLength = Math.max(oldVChildren.length, newVChildren.length);
+
+    function findDOMByIndex(index) {
+        for(let i=0; i<parentDOM.childNodes.length; i++){
+            if(parentDOM.childNodes[i]._mountIndex === index){
+                return parentDOM.childNodes[i];
+            }
+        }
+    }
+
     // TODOM DOM-DIFF的优化
     for(let i=0; i<maxLength; i++) {
         // 找此虚拟DOM对应的真实DOM之后的存在的真是DOM
@@ -186,7 +202,10 @@ function updateChildren(parentDOM,oldVChildren,newVChildren) {
         if((typeof oldVChildren[i] === 'string' || typeof oldVChildren[i] === 'number')
         && (typeof newVChildren[i] === 'string' || typeof newVChildren[i] === 'number')){
             if(oldVChildren != newVChildren) {
-                parentDOM.childNodes[i].textContent = newVChildren[i];
+                let dom = findDOMByIndex(i);
+                if(dom){
+                    dom.textContent = newVChildren[i];
+                }
             }
             continue;
         }
