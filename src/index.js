@@ -206,11 +206,30 @@ let HighOrder = withTracker((props) => (<>
   </>))
 // render props--- end ---
 // PureComponent --- start ---
-
+class MouseTracker extends React.PureComponent{
+  constructor(props) {
+    super(props);
+    this.state = {x:0, y:0}
+  }
+  handleMouseMove = (event) => {
+    this.setState({
+      x: event.clientX,
+      y: event.clientY
+    });
+  }
+  render() {
+    return(
+      <div onMouseMove={this.handleMouseMove} style={{border: '1px solid #ccc'}}>
+          <div>移动鼠标</div>
+          <p>当前鼠标的位置x={this.state.x}, y={this.state.y}</p>
+      </div>
+    )
+  }
+}
 // PureComponent --- end ---
 
 ReactDOM.render(
-  <HighOrder/>,
+  <MouseTracker/>,
   document.getElementById('root')
 );
 // console.log(JSON.stringify(obj, null, 2));

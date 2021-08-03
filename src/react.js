@@ -58,8 +58,6 @@ class PureComponent extends Component {
             return true;
         }
         for(let key in this.state) {
-            console.log('state',this.state[key], key);
-            console.log('nextState', nextState[key], key);
             if(this.state[key] !== nextState[key]){
                 return true;
             }

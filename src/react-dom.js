@@ -183,6 +183,13 @@ function updateChildren(parentDOM,oldVChildren,newVChildren) {
     for(let i=0; i<maxLength; i++) {
         // 找此虚拟DOM对应的真实DOM之后的存在的真是DOM
         let nextDOM = oldVChildren.find((item, index) => index > i && item && item.dom);
+        if((typeof oldVChildren[i] === 'string' || typeof oldVChildren[i] === 'number')
+        && (typeof newVChildren[i] === 'string' || typeof newVChildren[i] === 'number')){
+            if(oldVChildren != newVChildren) {
+                parentDOM.childNodes[i].textContent = newVChildren[i];
+            }
+            continue;
+        }
         compareTwoVdom(parentDOM, oldVChildren[i], newVChildren[i], nextDOM?.dom);
     }
 }
