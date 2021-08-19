@@ -1,5 +1,5 @@
-import React from './react';
-import ReactDOM from './react-dom';
+import React, {useState} from 'react';
+import ReactDOM from 'react-dom';
 
 class Car extends React.Component {
   constructor(props) {
@@ -227,9 +227,17 @@ class MouseTracker extends React.PureComponent{
   }
 }
 // PureComponent --- end ---
-
+function Child() {
+  const [number, setNumber] = useState(0);
+  return (
+      <div>
+          <p>{number}</p>
+          <button onClick={() => setNumber(number + 1 )}>+++</button>
+      </div>
+  )
+}
 ReactDOM.render(
-  <MouseTracker/>,
+  <Child/>,
   document.getElementById('root')
 );
 // console.log(JSON.stringify(obj, null, 2));
