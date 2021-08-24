@@ -1,4 +1,4 @@
-import {createStore} from '../redux';
+import {createStore} from 'redux';
 import React from "react";
 const ADD = 'ADD';
 const MINUS = 'MINUS';
