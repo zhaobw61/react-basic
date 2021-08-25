@@ -18,7 +18,7 @@ export default class Counter extends React.Component{
       <div>
         <p>{this.state.number}</p>
         <button onClick={() => boundActions.add()}>+</button>
-        <button onClick={boundActions.minus}>-</button>
+        <button onClick={boundActions.minus()}>-</button>
       </div>
     )
   }
