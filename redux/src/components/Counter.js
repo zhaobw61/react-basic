@@ -1,25 +1,23 @@
 import React from "react";
-import  store from '../store'
-import {bindActionCreators} from 'redux';
 import action from '../store/actions/counter1';
-let boundActions = bindActionCreators(action, store.dispatch);
-export default class Counter extends React.Component{
-  state = {number: store.getState().counter1.number};
-  componentDidMount() {
-    store.subscribe(()=>{
-      this.unSubscribe = this.setState({number: store.getState().counter1.number});
-    })
-  }
-  componentWillUnmount() {
-    this.unSubscribe && this.unSubscribe();
-  }
+import {connect} from 'react-redux';
+class Counter extends React.Component{
   render(h) {
     return(
       <div>
-        <p>{this.state.number}</p>
-        <button onClick={() => boundActions.add()}>+</button>
-        <button onClick={boundActions.minus()}>-</button>
+        <button onClick={this.props.add}>+</button>
+        <p>{this.props.number}</p>
+        <button onClick={this.props.minus}>-</button>
       </div>
     )
   }
 }
+
+function mapStateToProps(state) {
+  return state.counter1
+}
+
+export default connect(
+  mapStateToProps,
+  action
+)(Counter); // 柯里化
