@@ -1,0 +1,1 @@
+{"version":3,"file":"bundle.js","sources":["../src/index.ts"],"sourcesContent":["let str:string = 'hellow';\r\nconsole.log('index');\r\nlet arr: number | string;\r\n// arr = undefined"],"names":[],"mappings":";;;CACA,OAAO,CAAC,GAAG,CAAC,OAAO,CAAC,CAAC;CAErB;;;;;;"}
